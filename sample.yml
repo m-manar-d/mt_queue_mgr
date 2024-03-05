@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+  rproxy:
+    image: nginx:latest
+    container_name: rproxy
+    hostname: rproxy
+    ports:
+      - 80:80
+      - 443:443
+    restart: unless-stopped
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+    volumes:
+      - ./nginx/conf/:/etc/nginx/conf.d/:ro
+      - ./:/opt/mt_queue_mgr/:ro
+    networks: 
+      backend:
+        ipv4_address: 172.20.0.2
+  mt_queue_mgr:
+    build: 
+      context: ./
+      args:
+        -  DIRPATH=$DIRPATH
+    container_name: mt_queue_mgr
+    hostname: mt_queue_mgr
+    restart: unless-stopped
+    command: sh -c "gunicorn mt_queue_mgr.wsgi:application"
+    depends_on:
+      - rproxy
+    volumes:
+     - ./:/opt/mt_queue_mgr
+    networks:
+      backend:
+        ipv4_address: 172.20.0.3
+networks:
+  backend:
+     ipam:
+      driver: default
+      config:
+        - subnet: "172.20.0.0/24"

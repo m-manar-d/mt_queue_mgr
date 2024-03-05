@@ -1,0 +1,14 @@
+{% extends "admin/base.html" %}
+{% comment %} {% load i18n  eatn_tags static %} {% endcomment %}
+{% load i18n %}
+{% load static %}
+{% block title %}{{ title }} | {% trans "Queue Limiters v1.0 | ADMIN " %}{% endblock %}
+{% comment %}
+{% block extrastyle %}
+    <link rel="stylesheet" type="text/css" href="{% static "/admin/css/admin_color.css" %}"/>
+{% endblock %}
+{% endcomment %}
+{% block branding %}
+    <h1 id="site-name">{% trans "Queue Limiters v1.0 | ADMIN" %}</h1>
+{% endblock %}
+{% block nav-global %}{% endblock %}
