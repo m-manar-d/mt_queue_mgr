@@ -44,4 +44,4 @@ This started as a quick and practical solution to reduce the work load and avoid
 - If you are already using NGINX reverse-proxy, you can check nginx/conf/first.conf and copy/edit what you need to your NGINX config file.
 - This was tested on Debian 12.
 
-### Finally, any suggestion or advise is welcome and appreciated :)
+### Finally, any suggestion or advice is welcome and appreciated :)
