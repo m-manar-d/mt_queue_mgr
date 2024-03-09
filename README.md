@@ -33,7 +33,7 @@ This started as a quick and practical solution to reduce the work load and avoid
 - If you are already using Docker, you can copy from sample.yml to your main docker-compose.yml and edit as needed; in this case, you will not need steps 1 and 6 to 8.
 - If you are already using NGINX reverse-proxy, you can check nginx/conf/first.conf and copy/edit what you need to your NGINX config file.
 - This was tested on Debian 12.
-
-[App usage snapshots](https://github.com/m-manar-d/mt_queue_mgr/discussions/5)
+- Many thanks to: [github: RouterOS-API](https://github.com/socialwifi/RouterOS-api) and [pypy: RouterOS-api](https://pypi.org/project/RouterOS-api/)
+- Please check [App usage snapshots](https://github.com/m-manar-d/mt_queue_mgr/discussions/5)
 
 ### Finally, any suggestion or advice is welcome and appreciated :)
