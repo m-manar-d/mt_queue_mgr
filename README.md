@@ -3,12 +3,18 @@
 
 This started as a quick and practical solution to reduce the work load and avoid recurring errors while editing simple queues in multiple Mikrotik routers that are performing bandwidth limiting for customers of an ISP.
 
+### Changes in V2:
+
+- Ability to define multiple groups of limiter routers (each group will synchronize separately but duplicate simple queue names are not allowed).
+- Updated versions of Django/Gunicorn and Python.
+- Some bug fixes applied.
+
 ### Limitations:
 
-- Before using this app, currently configured [Queue types] and [Simple queues] must be matched in each router that will be added, or else after adding the first one, the next added routers will stay in a "sync" state, which means the app will not attempt to apply any changes to them when editing simple queues later.
+- Before using this app, currently configured [Queue types] and [Simple queues] must be matched in each router that will be added to the same group, or else after adding the first one, the next added routers will stay in a "sync" state, which means the app will not attempt to apply any changes to them when editing simple queues later.
 - This app doesn't have a user entry evaluation mechanism yet, so when editing or configuring new simple queues, care must be taken to avoid errors (usually you will get a Server Error (500) if the command was rejected by the Mikrotik router).
 - In the event of Server Error (500), just click the back button in your browser and check for errors.
-- For creating new simple queues, the recommended approach is to edit an existing one, then click (Save as new) instead of (Save).
+- For creating new simple queue, the recommended approach is to edit an existing one, then click (Save as new) instead of (Save).
 
 
 ### Installation:
@@ -17,7 +23,7 @@ This started as a quick and practical solution to reduce the work load and avoid
 2. `cd /opt`
 3. `git clone https://github.com/m-manar-d/mt_queue_mgr.git`
 4. `cd mt_queue_mgr`
-5. `nano .env`
+5. `nano .env`    # edit as needed
 6. `cp sample.yml docker-compose.yml`
 7. `docker-compose build`
 8. `docker-compose up -d`
