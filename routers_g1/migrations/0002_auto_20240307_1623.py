@@ -11,7 +11,7 @@ if path.isfile(dotenv_file):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('routers', '0001_initial'),
+        ('routers_g1', '0001_initial'),
     ]
     def generate_superuser(apps, schema_editor):
         from django.contrib.auth.models import User
@@ -19,7 +19,7 @@ class Migration(migrations.Migration):
         DJANGO_SU_NAME = environ['DJANGO_SU_NAME']
         DJANGO_SU_EMAIL = environ['DJANGO_SU_EMAIL']
         DJANGO_SU_PASSWORD = environ['DJANGO_SU_PASSWORD']
-        
+
         superuser = User.objects.create_superuser(
             username=DJANGO_SU_NAME,
             email=DJANGO_SU_EMAIL,

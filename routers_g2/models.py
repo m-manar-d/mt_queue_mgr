@@ -43,7 +43,7 @@ class Queue_types(models.Model):
 class Queues_T(models.Model):
     name = models.CharField(max_length=64)
     target = models.CharField(max_length=180)
-    max_limit = models.CharField(max_length=24)
+    max_limit = models.CharField(max_length=24, default='1/1')
     burst_limit = models.CharField(max_length=24)
     burst_threshold = models.CharField(max_length=24)
     burst_time = models.CharField(max_length=24)
@@ -51,20 +51,25 @@ class Queues_T(models.Model):
     priority = models.CharField(max_length=24)
     bucket_size = models.CharField(max_length=24)
     queue = models.CharField(max_length=24)
-    parent = models.CharField(max_length=24)
+    # v2 edited:
+    parent = models.CharField(max_length=24, default = 'none')
     disabled = models.CharField(
         max_length=3,
         choices=[('yes', 'yes'),
                 ('no', 'no'),]
         )
+    total_queue = models.CharField(max_length=24)
     class Meta:
         abstract = True
 
 class Last_queues(Queues_T):
     name = models.CharField(max_length=64, unique=True)
-    queue = models.ForeignKey(Last_queue_types, on_delete=models.PROTECT)
+    queue = models.ForeignKey(Last_queue_types, related_name='queue', on_delete=models.PROTECT)
+    total_queue = models.ForeignKey(Last_queue_types, related_name='total_queue' ,on_delete=models.PROTECT)
+    number = models.IntegerField(default = 10000)
     class Meta:
         verbose_name = "Simple Queue"
+        ordering = ["number"]
     def __str__(self):
         return f"'{self.name}' Limit: '{self.max_limit}'"
 
