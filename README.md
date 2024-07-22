@@ -43,5 +43,6 @@ This started as a quick and practical solution to reduce the work load and avoid
 - Please check [App usage snapshots](https://github.com/m-manar-d/mt_queue_mgr/discussions/5)
 
 ### Finally, any suggestion or advice is welcome and appreciated :)
-![Django](https://github.com/m-manar-d/mt_queue_mgr/blob/main/.github/workflows/django.yml/badge.svg)
-![Pylint](https://github.com/m-manar-d/mt_queue_mgr/blob/main/.github/workflows/pylint.yml/badge.svg)
+
+[![Django CI](https://github.com/m-manar-d/mt_queue_mgr/actions/workflows/django.yml/badge.svg)](https://github.com/m-manar-d/mt_queue_mgr/actions/workflows/django.yml)
+[![Pylint](https://github.com/m-manar-d/mt_queue_mgr/actions/workflows/pylint.yml/badge.svg)](https://github.com/m-manar-d/mt_queue_mgr/actions/workflows/pylint.yml)
