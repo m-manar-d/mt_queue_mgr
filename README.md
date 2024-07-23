@@ -46,3 +46,5 @@ This started as a quick and practical solution to reduce the work load and avoid
 
 [![Django CI](https://github.com/m-manar-d/mt_queue_mgr/actions/workflows/django.yml/badge.svg)](https://github.com/m-manar-d/mt_queue_mgr/actions/workflows/django.yml)
 [![Pylint](https://github.com/m-manar-d/mt_queue_mgr/actions/workflows/pylint.yml/badge.svg)](https://github.com/m-manar-d/mt_queue_mgr/actions/workflows/pylint.yml)
+[![CodeQL](https://github.com/m-manar-d/mt_queue_mgr/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/m-manar-d/mt_queue_mgr/actions/workflows/github-code-scanning/codeql)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
