@@ -1,6 +1,8 @@
-""" Register models of limiter_global """
+"""
+Register models of limiter_global
+"""
 
-from django.contrib import admin #, messages
+from django.contrib import admin
 from .models import Global_Limiters, Global_Last_Queues
 
 class limiterAdmin(admin.ModelAdmin):
@@ -10,13 +12,16 @@ class limiterAdmin(admin.ModelAdmin):
     readonly_fields = ('ip', 'identity', 'source_g')
     list_per_page = 15
     def get_actions(self, request):
+        """ This is used to remove the delete action """
         actions = super().get_actions(request)
         if 'delete_selected' in actions:
             del actions['delete_selected']
         return actions
     def has_add_permission(self, request, obj=None):
+        """ This is used to disallow adding elements from this app """
         return False
     def changeform_view(self, request, object_id=None, form_url='', extra_context=None):
+        """ This is used to remove some action buttons"""
         extra_context = extra_context or {}
         extra_context['show_save_and_continue'] = False
         extra_context['show_save'] = False
@@ -34,13 +39,16 @@ class queueAdmin(admin.ModelAdmin):
     readonly_fields = ('name', 'target', "max_limit", "disabled", 'source_g')
     list_per_page = 15
     def get_actions(self, request):
+        """ This is used to remove the delete action """
         actions = super().get_actions(request)
         if 'delete_selected' in actions:
             del actions['delete_selected']
         return actions
     def has_add_permission(self, request, obj=None):
+        """ This is used to disallow adding elements from this app """
         return False
     def changeform_view(self, request, object_id=None, form_url='', extra_context=None):
+        """ This is used to remove some action buttons"""
         extra_context = extra_context or {}
         extra_context['show_save_and_continue'] = False
         extra_context['show_save'] = False

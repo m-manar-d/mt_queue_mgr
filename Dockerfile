@@ -7,4 +7,4 @@ WORKDIR $DIRPATH
 COPY requirements.txt $DIRPATH
 RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
-CMD ["gunicorn", "--config", "gunicorn.conf.py", "/mt_queue_mgr.wsgi"]
+CMD ["gunicorn", "--config", "gunicorn.conf", "/mt_queue_mgr.wsgi"]

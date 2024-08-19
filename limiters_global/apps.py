@@ -1,3 +1,7 @@
+"""
+Register limiters_global
+"""
+
 from django.apps import AppConfig
 
 class RoutersConfig(AppConfig):

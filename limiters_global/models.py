@@ -1,3 +1,7 @@
+"""
+Group's model definitions
+"""
+
 from django.db import models
 
 class Global_Limiters(models.Model):
