@@ -3,6 +3,13 @@
 
 This started as a quick and practical solution to reduce the work load and avoid recurring errors while editing simple queues in multiple Mikrotik routers that are performing bandwidth limiting for customers of an ISP.
 
+### Changes in V3:
+- Exception handling.
+- Hide Routers passwords.
+- Updated versions of Django/Gunicorn and Python.
+- Some bug fixes applied.
+- Code revision/linting
+
 ### Changes in V2:
 
 - Ability to define multiple groups of limiter routers (each group will synchronize separately but duplicate simple queue names are not allowed).
@@ -31,6 +38,10 @@ This started as a quick and practical solution to reduce the work load and avoid
 10. `docker exec -it  mt_queue_mgr python manage.py makemigrations`
 11. `docker exec -it  mt_queue_mgr python manage.py migrate`
 12. `http://ip-address`
+13. `Before you start adding Mikrotiks to limiter's list, for every router of the same group make sure that:`
+	`- They have the same entries in: \queue\type\export`
+        `- They have the same entries in: \queue\simple\export`
+        `- Import the proper gx.placeholder-queues.rsc file`
 
 ### Notes:
 

@@ -1,26 +1,26 @@
+"""
+Django settings for mt_queue_mgr project.
+"""
 
 from pathlib import Path
-from os import path, environ
-from dotenv import load_dotenv
+import os
+import dotenv
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-dotenv_file = path.join(BASE_DIR, ".env")
-if path.isfile(dotenv_file):
-    load_dotenv(dotenv_file)
+dotenv_file = os.path.join(BASE_DIR, ".env")
+if os.path.isfile(dotenv_file):
+    dotenv.load_dotenv(dotenv_file)
 
-SECRET_KEY = environ['SECRET_KEY']
+SECRET_KEY = os.environ['SECRET_KEY']
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-
-#added manually:
-#CSRF_TRUSTED_ORIGINS = ["https://example.com", "https://www.example.com"]
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
+CSRF_TRUSTED_ORIGINS = os.environ['TRUSTED_ORIGINS']
 
 # Application definition
+
 INSTALLED_APPS = [
     'limiters_global.apps.RoutersConfig',
     'routers_g1.apps.RoutersConfig',
@@ -49,7 +49,7 @@ ROOT_URLCONF = 'mt_queue_mgr.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        "DIRS": [path.join(BASE_DIR, "templates"), ],
+        "DIRS": [os.path.join(BASE_DIR, "templates"), ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -66,18 +66,29 @@ WSGI_APPLICATION = 'mt_queue_mgr.wsgi.application'
 
 
 # Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+        "OPTIONS": {
+            "init_command": (
+                "PRAGMA foreign_keys=ON;"
+                "PRAGMA journal_mode = WAL;"
+                "PRAGMA synchronous = NORMAL;"
+                "PRAGMA busy_timeout = 5000;"
+                "PRAGMA temp_store = MEMORY;"
+                "PRAGMA mmap_size = 134217728;"
+                "PRAGMA journal_size_limit = 67108864;"
+                "PRAGMA cache_size = 2000;"
+            ),
+            "transaction_mode": "IMMEDIATE",
+        },
     }
 }
 
 
 # Password validation
-# https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -96,11 +107,10 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 # Internationalization
-# https://docs.djangoproject.com/en/4.2/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = environ['TIME_ZONE']
+TIME_ZONE = os.environ['TIME_ZONE']
 
 USE_I18N = True
 
@@ -108,12 +118,10 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_ROOT = BASE_DIR / 'static'
 STATIC_URL = 'static/'
 
 # Default primary key field type
-# https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
