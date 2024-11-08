@@ -3,6 +3,9 @@
 disable=no-member,
         unused-argument,
         missing-function-docstring,
+        missing-module-docstring,
         missing-class-docstring,
         too-few-public-methods,
-        unused-argument
+        unused-argument,
+        invalid-name,
+        cyclic-import
