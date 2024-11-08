@@ -4,7 +4,7 @@ Group's model definitions
 
 from django.db import models
 
-class Global_Limiters(models.Model):
+class GlobalLimiters(models.Model):
     """ The table to summarize all limiter routers """
     ip = models.CharField(max_length=50, unique=True)
     identity = models.CharField(max_length=64, default = '')
@@ -14,9 +14,13 @@ class Global_Limiters(models.Model):
     def __str__(self):
         return f"'{self.ip}' - Source: ' {self.source_g}"
 
-class Global_Last_Queues(models.Model):
+class GlobalLastQueues(models.Model):
     """ The table to summarize all simple queues """
-    name = models.CharField(max_length=64, unique=True)
+    name = models.CharField(
+        max_length=96,
+        unique=True,
+        error_messages={'unique':"A simple queue with this name has already been registered."}
+        )
     target = models.CharField(max_length=180)
     max_limit = models.CharField(max_length=24, default='1/1')
     disabled = models.CharField(max_length=3)

@@ -3,11 +3,12 @@ Register models of limiter_global
 """
 
 from django.contrib import admin
-from .models import Global_Limiters, Global_Last_Queues
+from django.utils.html import format_html
+from .models import GlobalLimiters, GlobalLastQueues
 
-class limiterAdmin(admin.ModelAdmin):
+class LimiterAdmin(admin.ModelAdmin):
     """ Limiter Routers' table reg """
-    list_display = ('ip', 'identity', 'source_g')
+    list_display = ("ip", "identity", 'source_g')
     search_fields = ['ip', 'identity', 'source_g']
     readonly_fields = ('ip', 'identity', 'source_g')
     list_per_page = 15
@@ -26,18 +27,42 @@ class limiterAdmin(admin.ModelAdmin):
         extra_context['show_save_and_continue'] = False
         extra_context['show_save'] = False
         extra_context['show_delete'] = False
-        return super(limiterAdmin, self).changeform_view(
+        return super().changeform_view(
             request, object_id,
             extra_context=extra_context
             )
-admin.site.register(Global_Limiters, limiterAdmin)
+admin.site.register(GlobalLimiters, LimiterAdmin)
 
-class queueAdmin(admin.ModelAdmin):
+class QueueAdmin(admin.ModelAdmin):
     """ Simple queue table reg """
-    list_display = ("name", "target", "max_limit", "disabled", 'source_g')
+    list_display = ("c_name", "target", "max_limit", "c_disabled", 'source_g')
     search_fields = ['name', 'target', "max_limit", "disabled", 'source_g']
     readonly_fields = ('name', 'target', "max_limit", "disabled", 'source_g')
     list_per_page = 15
+    @admin.display(description='Name')
+    def c_name(self,obj):
+        """ Applying color codes to 'name' based on 'disabled' """
+        if obj.disabled == 'yes':
+            name_color = 'ffb66e;font-style: oblique;'
+        else:
+            name_color = 'currentColor'
+        return format_html(
+            '<span style="color: #{};">{}</span>',
+            name_color,
+            obj.name,
+        )
+    @admin.display(description='Disabled')
+    def c_disabled(self,obj):
+        """ Applying color codes to 'disabled' """
+        if obj.disabled == 'yes':
+            dis_color = 'ffb66e;font-style: oblique;'
+        else:
+            dis_color = 'currentColor'
+        return format_html(
+            '<span style="color: #{};">{}</span>',
+            dis_color,
+            obj.disabled,
+        )
     def get_actions(self, request):
         """ This is used to remove the delete action """
         actions = super().get_actions(request)
@@ -53,8 +78,8 @@ class queueAdmin(admin.ModelAdmin):
         extra_context['show_save_and_continue'] = False
         extra_context['show_save'] = False
         extra_context['show_delete'] = False
-        return super(queueAdmin, self).changeform_view(
+        return super().changeform_view(
             request, object_id,
             extra_context=extra_context
             )
-admin.site.register(Global_Last_Queues, queueAdmin)
+admin.site.register(GlobalLastQueues, QueueAdmin)

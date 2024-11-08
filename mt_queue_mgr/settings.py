@@ -14,20 +14,22 @@ if os.path.isfile(dotenv_file):
 
 SECRET_KEY = os.environ['SECRET_KEY']
 
-DEBUG = True
+FW_ADDRESS_LIST = os.environ['FW_ADDRESS_LIST']
+
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
 # Don't leave this value!! Edit as required!!
-CSRF_TRUSTED_ORIGINS = ["https://*"]
+CSRF_TRUSTED_ORIGINS = ['https://*.ramtek.net.tr']
 
 # Application definition
-
 INSTALLED_APPS = [
     'limiters_global.apps.RoutersConfig',
     'routers_g1.apps.RoutersConfig',
     'routers_g2.apps.RoutersConfig',
     'routers_g3.apps.RoutersConfig',
+    "log_viewer",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -47,6 +49,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'mt_queue_mgr.urls'
+
 
 TEMPLATES = [
     {
@@ -68,27 +71,20 @@ WSGI_APPLICATION = 'mt_queue_mgr.wsgi.application'
 
 
 # Database
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'HOST': os.environ['DATABASE_HOST'],
+        'PORT':'3306',
         "OPTIONS": {
-            "init_command": (
-                "PRAGMA foreign_keys=ON;"
-                "PRAGMA journal_mode = WAL;"
-                "PRAGMA synchronous = NORMAL;"
-                "PRAGMA busy_timeout = 5000;"
-                "PRAGMA temp_store = MEMORY;"
-                "PRAGMA mmap_size = 134217728;"
-                "PRAGMA journal_size_limit = 67108864;"
-                "PRAGMA cache_size = 2000;"
-            ),
-            "transaction_mode": "IMMEDIATE",
+            "database": os.environ['DATABASE_NAME'],
+            "user": os.environ['DATABASE_USER'],
+            "password": os.environ['DATABASE_PASSWORD'],
+            "charset": os.environ['DATABASE_CHARSET'],
+            "init_command": "SET default_storage_engine=INNODB",
         },
     }
 }
-
 
 # Password validation
 
@@ -127,3 +123,49 @@ STATIC_URL = 'static/'
 # Default primary key field type
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname}: {asctime} - {module} - {funcName}: {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        "console": {
+            "class": "logging.StreamHandler",
+            'formatter': 'verbose',
+            'level': 'DEBUG',
+        },
+        'logfile': {
+            'class': 'logging.handlers.TimedRotatingFileHandler',
+            'filename': BASE_DIR / 'log/mt_queue_mgr.log',
+            'formatter': 'verbose',
+            'when': 'midnight',
+            'interval': 1,
+            'backupCount': 7,
+            'level': 'DEBUG',
+        },
+    },
+    'loggers': {
+        'mt_queue_mgr': {
+            'handlers': ['logfile'],
+            'level': os.environ['LOG_LEVEL'],
+            'propagate': True,
+        },
+    }
+}
+
+# django-log-viewer config:
+LOG_VIEWER_FILES = ['mt_queue_mgr.log']
+LOG_VIEWER_FILES_PATTERN = '*.log*'
+LOG_VIEWER_FILES_DIR = 'log/'
+LOG_VIEWER_PAGE_LENGTH = 50       # total log lines per-page
+LOG_VIEWER_MAX_READ_LINES = 1000  # total log lines will be read
+LOG_VIEWER_FILE_LIST_MAX_ITEMS_PER_PAGE = 25 # Max log files loaded in Datatable per page
+LOG_VIEWER_PATTERNS = ['INFO', 'DEBUG', 'WARNING', 'ERROR', 'CRITICAL']
+LOG_VIEWER_EXCLUDE_TEXT_PATTERN = None  # String regex expression to exclude the log from line
+LOG_VIEWER_FILE_LIST_TITLE = "Queue Limiters Log Viewer"
+LOG_VIEWER_FILE_LIST_STYLES = "/static/log_viewer/css/log-viewer-custom.css"

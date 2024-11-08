@@ -8,6 +8,6 @@ class RoutersConfig(AppConfig):
     """ Register routers_g1 """
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'routers_g1'
-    verbose_name = "G1-Istanbul Limiters"
+    verbose_name = "G1-Group1 Limiters"
     def ready(self):
         import routers_g1.signals

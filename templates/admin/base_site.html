@@ -2,16 +2,15 @@
 {% comment %} {% load i18n  eatn_tags static %} {% endcomment %}
 {% load i18n %}
 {% load static %}
-{% block title %}{{ title }} | {% trans "Queue Limiters - v3" %}{% endblock %}
-{% comment %}
-{% block extrastyle %}
-    <link rel="stylesheet" type="text/css" href="{% static "/admin/css/admin_color.css" %}"/>
-{% endblock %}
-{% endcomment %}
+{% block title %}{{ title }} | {% trans "Queue Limiters - v4" %}{% endblock %}
 {% block branding %}
-    <h1 id="site-name">{% trans "Queue Limiters - v3" %}</h1>
+    <h1 id="site-name">{% trans "Queue Limiters - v4" %}</h1>
 {% endblock %}
 {% block footer %}
-    <h4 align="center" id="designed-by">{% trans "Designed by Manar - manar@ramtek.net.tr" %}</h1>
+    <h4 align="center" id="designed-by">{% trans "Designed by Manar - manar@ramtek.net.tr" %}</h4>
 {% endblock %}
-{% block nav-global %}{% endblock %}
+{% block nav-global %}
+    {% if request.user.is_superuser %}
+            <h4><a href="/logs/" target="_blank" rel="noopener noreferrer">Check Logs</a></h4>
+    {% endif %}
+{% endblock %}
