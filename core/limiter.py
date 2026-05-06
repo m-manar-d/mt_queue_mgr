@@ -28,7 +28,7 @@ class Limiter():
     def _test_socket(self):
         """ Connect to router's API """
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        sock.settimeout(2)
+        sock.settimeout(5)
         result = sock.connect_ex((self._ip,8728))
         if result == 0:
             self._sock_ok = True

@@ -1,0 +1,31 @@
+# Secrets / environment
+.env
+.env.*
+!.env.example
+
+# Runtime data
+db.sqlite3
+*.sqlite3
+log/*
+!log/.gitkeep
+logs/
+*.log
+*.log.*
+
+# Django generated/static runtime output
+static/
+media/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# OS/editor
+.DS_Store
+.vscode/
+.idea/
